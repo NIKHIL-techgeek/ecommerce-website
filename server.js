@@ -9,16 +9,17 @@ import categoryRoutes from "./routes/categoryRoutes.js";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
 import productRoutes from "./routes/productRoute.js";
-
+import path from 'path';
+import {fileURLToPath} from 'url';
 // Configure env
 dotenv.config();
 
 // Database config
 connectDB();
 
-// Get the current module's directory path
-const currentModulePath = dirname(fileURLToPath(import.meta.url));
-
+//esmodule fix
+const __filename=fileURLToPath(import.metal.url);
+const __dirname=path.dirname(__filename);
 // Create the Express app
 const app = express();
 
@@ -26,7 +27,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
-app.use(express.static(join(currentModulePath, "client/build")));
+app.use(express.static(join(__dirname,'./client/build' )));
 
 // Routes
 app.use("/api/v1/auth", authRoutes);
@@ -34,9 +35,9 @@ app.use("/api/v1/category", categoryRoutes);
 app.use("/api/v1/product", productRoutes);
 
 // Route for serving the HTML file
-app.use("*", function (req, res) {
-  res.sendFile(join(currentModulePath, "client/build/index.html"));
-});
+app.use('*',function(req,res){
+  res.sendFile(path.join(__dirname,'./client/build/index.html')
+})
 
 // Define the port
 const PORT = process.env.PORT || 8080;
