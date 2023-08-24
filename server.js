@@ -36,7 +36,7 @@ app.use("/api/v1/product", productRoutes);
 
 // Route for serving the HTML file
 app.use('*',function(req,res){
-  res.sendFile(path.join(__dirname,'./client/build/index.html')
+  res.sendFile(path.join(__dirname,'./client/build/index.html'))
 })
 
 // Define the port
